@@ -7,7 +7,7 @@ COPY linkcheckerrc /tmp/
 
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y openjdk-8-jdk python2.7 bash git wget unzip python-pip \
+    && apt-get install -y openjdk-8-jdk python2.7 bash git wget unzip python-pip maven \
     && wget -nv https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip \
     && unzip gradle-$GRADLE_VERSION-bin.zip -d /opt \
     && ln -s /opt/gradle-$GRADLE_VERSION/bin/gradle /usr/bin/gradle \
