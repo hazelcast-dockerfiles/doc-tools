@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER Josef Cacek
 
 ENV GRADLE_VERSION=5.6.4
