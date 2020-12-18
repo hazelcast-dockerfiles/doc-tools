@@ -1,6 +1,6 @@
 # Sample configuration file; see the linkcheckerrc(5) man page or
 # execute linkchecker -h for help on these options.
-# Commandline or GUI options override these settings.
+# Commandline options override these settings.
 
 ##################### output configuration ##########################
 [output]
@@ -21,10 +21,6 @@
 
 
 ##################### logger configuration ##########################
-# Note that the logger configuration is ignored by the linkchecker-gui
-# program. Results in the GUI can be saved to a file with the command
-# File -> Save results.
-#
 # logger output part names:
 # all       For all parts
 # realurl   The full url link
@@ -107,9 +103,9 @@
 #colorok=#3ba557
 #parts=all
 
-# blacklist logger
-[blacklist]
-#filename=~/.linkchecker/blacklist
+# failures logger
+[failures]
+#filename=~/.linkchecker/failures
 
 # custom xml logger
 [xml]
@@ -127,14 +123,13 @@
 
 ##################### checking options ##########################
 [checking]
-maxfilesizeparse=16777216
 # number of threads
-# threads=100
+#threads=10
 # connection timeout in seconds
-timeout=15
+#timeout=60
 # Time to wait for checks to finish after the user aborts the first time
 # (with Ctrl-C or the abort button).
-aborttimeout=30
+#aborttimeout=300
 # The recursion level determines how many times links inside pages are followed.
 #recursionlevel=1
 # Basic NNTP server. Overrides NNTP_SERVER environment variable.
@@ -165,11 +160,18 @@ sslverify=0
 # Stop checking new URLs after the given number of seconds. Same as if the
 # user hits Ctrl-C after X seconds.
 #maxrunseconds=600
+# Don't download files larger than the given number of bytes
+#maxfilesizedownload=5242880
+# Don't parse files larger than the given number of bytes
+#maxfilesizeparse=1048576
+maxfilesizeparse=16777216
 # Maximum number of URLs to check. New URLs will not be queued after the
 # given number of URLs is checked.
 #maxnumurls=153
 # Maximum number of requests per second to one host.
 #maxrequestspersecond=10
+# Respect the instructions in any robots.txt files
+#robotstxt=1
 # Allowed URL schemes as a comma-separated list.
 #allowedschemes=http,https
 
@@ -217,15 +219,17 @@ sslverify=0
 #  ^https?://www\.example\.com/~calvin/ calvin mypass
 #  ^ftp://www\.example\.com/secret/ calvin
 
-# if the website requires a login the URL and optionally the user and
-# password CGI fieldnames can be provided.
+# if the website requires a login via a page with an HTML form the URL of the
+# page and optionally the username and password input element name attributes
+# can be provided.
 #loginurl=http://www.example.com/
 
-# The name of the user and password CGI field
+# The name attributes of the username and password HTML input elements
 #loginuserfield=login
 #loginpasswordfield=password
-# Optionally any additional CGI name/value pairs. Note that the default
-# values are submitted automatically.
+# Optionally the name attributes of any additional input elements and the values
+# to populate them with. Note that these are submitted without checking
+# whether matching input elements exist in the HTML form.
 #loginextrafields=
 #  name1:value1
 #  name 2:value 2
@@ -270,3 +274,11 @@ sslverify=0
 # Parse and check links in Word files
 #[WordParser]
 
+# Parse and check links in Markdown files.
+# Supported links are:
+#        <http://autolink.com>
+#        [name](http://link.com "Optional title")
+#        [id]: http://link.com "Optional title"
+#[MarkdownCheck]
+# Regexp of filename
+#filename_re=.*\.(blog|markdown|md(own)?|mkdn?)$
